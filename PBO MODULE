@@ -1,0 +1,120 @@
+*&---------------------------------------------------------------------*
+*& Include ZRESTRO17_O01 *&---------------------------------------------------------------------* *&---------------------------------------------------------------------* *& Module STATUS_0100 OUTPUT *&---------------------------------------------------------------------* * text *----------------------------------------------------------------------* MODULE status_0100 OUTPUT.
+SET PF-STATUS '0100'.
+SET TITLEBAR 'Login Screen'. DATA time TYPE t.
+DATA date TYPE d.
+date = sy-datum.
+time = sy-uzeit.
+ENDMODULE. " STATUS_0100 OUTPUT *&---------------------------------------------------------------------* *& Module STATUS_0001 OUTPUT *&---------------------------------------------------------------------* * text *----------------------------------------------------------------------* MODULE status_0001 OUTPUT.
+SET PF-STATUS '0001'.
+SET TITLEBAR 'Welcome Screen'.
+DATA: W_LINES TYPE I.
+TYPES PICT_LINE(256) TYPE C.
+DATA :
+CONTAINER TYPE REF TO CL_GUI_CUSTOM_CONTAINER, EDITOR TYPE REF TO CL_GUI_TEXTEDIT,
+PICTURE TYPE REF TO CL_GUI_PICTURE,
+PICT_TAB TYPE TABLE OF PICT_LINE,
+URL(255) TYPE C.
+DATA: DATA:
+GRAPHIC_URL(255).
+BEGIN OF GRAPHIC_TABLE OCCURS 0,
+LINE(255) TYPE X,
+END OF GRAPHIC_TABLE. L_GRAPHIC_CONV TYPE I. L_GRAPHIC_OFFS TYPE I. GRAPHIC_SIZE TYPE I. L_GRAPHIC_XSTR TYPE XSTRING.
+DATA:
+DATA:
+DATA:
+DATA:
+.
+CALL METHOD CL_GUI_CFW=>FLUSH. CREATE OBJECT:
+CONTAINER EXPORTING CONTAINER_NAME = 'PICTURE_CONTROL', PICTURE EXPORTING PARENT = CONTAINER.
+CALL METHOD CL_SSF_XSF_UTILITIES=>GET_BDS_GRAPHIC_AS_BMP
+EXPORTING
+    P_OBJECT
+    P_NAME
+    P_ID
+    P_BTYPE
+RECEIVING P_BMP
+.
+IF SY-SUBRC <> 0.
+= 'GRAPHICS'
+= 'ZRMSLOGO17' = 'BMAP'
+= 'BCOL'
+= L_GRAPHIC_XSTR
+ENDIF.
+GRAPHIC_SIZE = XSTRLEN( L_GRAPHIC_XSTR ). L_GRAPHIC_CONV = GRAPHIC_SIZE. L_GRAPHIC_OFFS = 0.
+WHILE L_GRAPHIC_CONV > 255.
+GRAPHIC_TABLE-LINE = L_GRAPHIC_XSTR+L_GRAPHIC_OFFS(255
+APPEND GRAPHIC_TABLE.
+L_GRAPHIC_OFFS = L_GRAPHIC_OFFS + 255. L_GRAPHIC_CONV = L_GRAPHIC_CONV - 255.
+ENDWHILE.
+GRAPHIC_TABLE-LINE = L_GRAPHIC_XSTR+L_GRAPHIC_OFFS(L_GRAPH
+APPEND GRAPHIC_TABLE.
+CALL FUNCTION 'DP_CREATE_URL'
+EXPORTING
+TYPE = 'IMAGE' SUBTYPE = 'X-UNKNOWN' SIZE = GRAPHIC_SIZE LIFETIME = 'T'
+TABLES
+DATA = GRAPHIC_TABLE
+CHANGING
+URL = URL.
+CALL METHOD PICTURE->LOAD_PICTURE_FROM_URL
+EXPORTING
+URL = URL.
+CALL METHOD PICTURE->SET_DISPLAY_MODE
+EXPORTING
+DISPLAY_MODE = PICTURE->DISPLAY_MODE_FIT_CENTER.
+ENDMODULE. " STATUS_0001 OUTPUT *&-------------------------------------------------------------------
+*& Module STATUS_0110 OUTPUT *&---------------------------------------------------------------------* * text *----------------------------------------------------------------------* MODULE status_0110 OUTPUT.
+SET PF-STATUS '0110'.
+SET TITLEBAR 'Greeter Screen'.
+ENDMODULE. " STATUS_0110 OUTPUT *&---------------------------------------------------------------------*
+
+
+*& Module STATUS_0101 OUTPUT
+*&---------------------------------
+* text *----------------------------------------------------------------------* MODULE status_0101 OUTPUT.
+SET PF-STATUS '0101'.
+SET TITLEBAR 'Change Password'.
+ENDMODULE. " STATUS_0101 OUTPUT *&---------------------------------------------------------------------* *& Module STATUS_0120 OUTPUT *&---------------------------------------------------------------------* * text *----------------------------------------------------------------------* MODULE status_0120 OUTPUT.
+SET PF-STATUS '0120'.
+SET TITLEBAR 'Waiter Screen'.
+ENDMODULE. " STATUS_0120 OUTPUT *&---------------------------------------------------------------------* *& Module STATUS_0130 OUTPUT *&---------------------------------------------------------------------* * text *----------------------------------------------------------------------* MODULE status_0130 OUTPUT.
+SET PF-STATUS '0130'.
+SET TITLEBAR 'Manager screen'.
+ENDMODULE. " STATUS_0130 OUTPUT *&---------------------------------------------------------------------* *& Module STATUS_0140 OUTPUT *&---------------------------------------------------------------------* * text *----------------------------------------------------------------------* MODULE status_0140 OUTPUT.
+SET PF-STATUS '0140'.
+SET TITLEBAR 'Admin Screen'.
+ENDMODULE. " STATUS_0140 OUTPUT *&---------------------------------------------------------------------* *& Module STATUS_0111 OUTPUT *&---------------------------------------------------------------------* * text *----------------------------------------------------------------------* MODULE status_0111 OUTPUT.
+SET PF-STATUS '0111'.
+SET TITLEBAR 'Dine In Reservation Screen'.
+ENDMODULE. " STATUS_0111 OUTPUT *&---------------------------------------------------------------------* *& Module STATUS_0112 OUTPUT *&---------------------------------------------------------------------*
+* text
+*-----------
+MODULE status_0112 OUTPUT.
+SET PF-STATUS '0112'.
+SET TITLEBAR 'Delivery Registration'.
+ENDMODULE. " STATUS_0112 OUTPUT *&---------------------------------------------------------------------* *& Module STATUS_0113 OUTPUT *&---------------------------------------------------------------------* * text *----------------------------------------------------------------------* MODULE status_0113 OUTPUT.
+SET PF-STATUS '0113'.
+SET TITLEBAR 'takeout screen'.
+ENDMODULE. " STATUS_0113 OUTPUT *&---------------------------------------------------------------------* *& Module STATUS_0131 OUTPUT *&---------------------------------------------------------------------* * text *----------------------------------------------------------------------* MODULE status_0131 OUTPUT.
+SET PF-STATUS '0131'.
+SET TITLEBAR 'Menu screen for manager'.
+ENDMODULE. " STATUS_0131 OUTPUT
+*&---------------------------------------------------------------------* *& Module STATUS_0134 OUTPUT *&---------------------------------------------------------------------* * text *----------------------------------------------------------------------* MODULE status_0134 OUTPUT.
+SET PF-STATUS '0134'.
+SET TITLEBAR 'Sales screen for manager'.
+ENDMODULE. " STATUS_0134 OUTPUT *&---------------------------------------------------------------------* *& Module STATUS_0114 OUTPUT *&---------------------------------------------------------------------* * text *----------------------------------------------------------------------* MODULE status_0114 OUTPUT.
+SET PF-STATUS '0114'.
+SET TITLEBAR 'Payment'.
+ENDMODULE. " STATUS_0114 OUTPUT
+MODULE countdown_timer OUTPUT. *PERFORM timer.
+ENDMODULE. -------------------------------------------------------------*
+*&--------
+*& Module STATUS_0132 OUTPUT *&---------------------------------------------------------------------* * text *----------------------------------------------------------------------* MODULE status_0132 OUTPUT.
+SET PF-STATUS '0132'.
+SET TITLEBAR 'Inventory Manipulation screen'.
+ENDMODULE.
+
+
+
+
+

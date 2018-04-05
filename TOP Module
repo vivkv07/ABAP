@@ -1,0 +1,27 @@
+*&---------------------------------------------------------------------*
+*& Include ZRESTRO17_TOP Module Pool
+ZRESTRO17 *&
+*&---------------------------------------------------------------------*
+PROGRAM zrestro17.
+TABLES : zemplist17,zsales17.
+DATA:
+ok_code
+ok_code2
+ok_code1
+ok_code3
+ok_code4
+ok_code5
+major
+employeeid
+pwd
+current_password
+new_password
+confirm_password
+wa_zrmsmenu17 TYPE zrmsmenu17.
+TYPE sy-ucomm,
+TYPE sy-ucomm,
+TYPE sy-ucomm,
+TYPE sy-ucomm,
+TYPE sy-ucomm,
+TYPE sy-ucomm,
+TYPE zmajor00-major, TYPE c LENGTH 8, TYPE c LENGTH 8, TYPE c LENGTH 6, TYPE c LENGTH 6, TYPE c LENGTH 6,

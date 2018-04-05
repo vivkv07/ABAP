@@ -1,0 +1,111 @@
+*&---------
+*& Include ZRESTRO17_F01 *&---------------------------------------------------------------------* *&---------------------------------------------------------------------* *& Form CHECK_LOGIN_DETAILS *&---------------------------------------------------------------------* * text *----------------------------------------------------------------------* * --> p1 text
+* <-- p2 text *----------------------------------------------------------------------* FORM check_login_details .
+* TRANSLATE: employeeid TO UPPER CASE.
+**
+pwd TO LOWER CASE.
+DATA : record_count TYPE i.
+SELECT COUNT(*)
+FROM zemployee17
+INTO record_count
+WHERE empid = employeeid AND password = pwd.
+IF sy-subrc = 0.
+IF ok_code1 ='SIGNIN'.
+IF pwd = 'PASS'.
+MESSAGE 'You have logged in with the same password provided initially
+, Do you want to change? Please select Change Password' TYPE 'I'. IF employeeid = 'MANAG1'.
+CALL SCREEN '0130'.
+ELSEIF employeeid = 'ADMIN'.
+CALL SCREEN '0140'. ELSE.
+CALL SCREEN '0110'. ENDIF.
+ELSE.
+IF employeeid = 'MANAG1'.
+CALL SCREEN '0130'.
+ELSEIF employeeid = 'ADMIN'.
+CALL SCREEN '0140'. ELSE.
+CALL SCREEN '0110'. ENDIF.
+      ENDIF.
+    ENDIF.
+ELSE.
+MESSAGE 'Wrong ID or password detected, Please contact your Manager' TYPE
+'I'. ENDIF.
+
+ENDFORM. " CHECK_LOGIN_DETAILS
+*&-----------------------------------------------
+*& Form CHANGE_PASSWORD *&---------------------------------------------------------------------* * text *----------------------------------------------------------------------* * --> p1 text
+* <-- p2 text *----------------------------------------------------------------------* FORM change_password .
+DATA : record_count TYPE i.
+SELECT COUNT(*)
+FROM zemployee17
+INTO record_count
+WHERE empid = employeeid
+AND password = current_password.
+IF new_password = confirm_password.
+UPDATE zemployee17
+SET password = new_password
+WHERE empid = employeeid AND password = current_password.
+IF sy-subrc = 0.
+MESSAGE 'Password successfully updated' TYPE 'I'.
+ELSE.
+MESSAGE 'Password was NOT updated!!' TYPE 'I'.
+ENDIF. ELSE.
+MESSAGE 'Current Password is incorrect!' TYPE 'I'. ENDIF.
+ENDFORM. " CHANGE_PASSWORD
+*&---------------------------------------------------------------------* *& Form INSERT_USER_DETAILS *&---------------------------------------------------------------------* * text *----------------------------------------------------------------------* * --> p1 text
+* <-- p2 text *----------------------------------------------------------------------* FORM insert_user_details .
+TYPES: BEGIN OF ty_zemployee17,
+client TYPE zemployee17-client,
+empid TYPE zemployee17-empid,
+password TYPE zemployee17-password, END OF ty_zemployee17.
+
+
+TYPES: BEGIN OF ty_zemplist17,
+client TYPE ze
+empid
+lname
+fname
+mi contactnumber
+TYPE zemplist17-empid, TYPE zemplist17-lname, TYPE zemplist17-fname, TYPE zemplist17-mi, TYPE zemplist17-contact
+address hire_date gender dob
+TYPE zemplist17-address, TYPE zemplist17-hire_date, TYPE zemplist17-gender, TYPE zemplist17-dob,
+END OF ty_zemplist17.
+DATA : wa_login TYPE zemployee17,
+wa_user_details TYPE zemplist17. wa_login-empid = zemplist17-empid.
+wa_login-password = 'PASS'.
+wa_user_details-empid = zemplist17-empid. wa_user_details-lname = zemplist17-lname. wa_user_details-fname = zemplist17-fname. wa_user_details-mi = zemplist17-mi. wa_user_details-gender = zemplist17-gender. wa_user_details-dob = zemplist17-dob. wa_user_details-contactnumber = zemplist17-contactnum
+wa_user_details-address = zemplist17-address. wa_user_details-hire_date = zemplist17-hire_date.
+INSERT zemplist17 FROM wa_user_details. IF sy-subrc = 0.
+MESSAGE 'Record successfully inserted into system' TYPE
+INSERT zemployee17 FROM wa_login. IF sy-subrc = 0.
+MESSAGE 'Employee ID generated' TYPE 'I'. ELSE.
+MESSAGE 'Error encountered!' TYPE 'I'. ENDIF.
+ELSE.
+MESSAGE 'Error encountered while inserting into the system!'
+ENDIF.
+ENDFORM. " INSERT_USER_DETAILS *&---------------------------------------------------------------------* *& Form INSERT_USER_DETAILS *&---------------------------------------------------------------------* * text *----------------------------------------------------------------------* * --> p1 text
+* <-- p2 text
+
+*----------------------------------------------------------------------*
+*&---------------------------------------------------------------------* *& Form CREATE_COLUMN_HEADINGS *&---------------------------------------------------------------------* * text *----------------------------------------------------------------------* * --> p1 text
+* <-- p2 text *----------------------------------------------------------------------* FORM create_column_headings .
+WRITE: / 'Member Number',
+20 'Member Name' COLOR = 2,
+ENDFORM.
+40 'Date of Birth', 60 'Gender',
+80 'Fee',
+100 'Currency'.
+" CREATE_COLUMN_HEADINGS
+*&---------------------------------------------------------------------* *& Form DISPLAY_EMPLIST *&---------------------------------------------------------------------* * text *----------------------------------------------------------------------* * --> p1 text
+* <-- p2 text *----------------------------------------------------------------------* FORM display_emplist .
+CALL TRANSACTION 'ZLIST17'.
+ENDFORM. " DISPLAY_EMPLIST *&---------------------------------------------------------------------* *& Form EDIT_MENU *&---------------------------------------------------------------------* * text *----------------------------------------------------------------------* * --> p1 text
+* <-- p2 text *----------------------------------------------------------------------* FORM edit_menu .
+CALL TRANSACTION 'ZMENU17'.
+ENDFORM. " EDIT_MENU *&---------------------------------------------------------------------*
+*&---------------------------------------------------------------------* *& Form INVEDIT *&---------------------------------------------------------------------* * text
+
+
+*----------------------------------------------------------------------*
+* --> p1 text
+* <-- p2 text *----------------------------------------------------------------------* FORM invedit .
+call TRANSACTION 'ZINVEDITS17'. ENDFORM. " INVEDIT

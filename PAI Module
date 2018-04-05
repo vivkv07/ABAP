@@ -1,0 +1,156 @@
+*&---------------------------------------------------------------------* *& Include ZRESTRO17_I01 *&---------------------------------------------------------------------* *&---------------------------------------------------------------------* *& Module USER_COMMAND_0100 INPUT *&---------------------------------------------------------------------* * text *----------------------------------------------------------------------* MODULE user_command_0100 INPUT.
+ok_code1 = sy-ucomm. CASE ok_code1.
+WHEN 'SIGNIN'.
+PERFORM check_login_details.
+WHEN 'CHPWD' .
+CALL SCREEN '0101'.
+WHEN 'CLOSE'.
+LEAVE TO SCREEN '0001'.
+WHEN 'BACK'.
+LEAVE TO SCREEN '0001'.
+ENDCASE.
+ENDMODULE. " USER_COMMAND_0100 INPUT *&---------------------------------------------------------------------* *& Module USER_COMMAND_0001 INPUT *&---------------------------------------------------------------------* * text *----------------------------------------------------------------------* MODULE user_command_0001 INPUT.
+ok_code = sy-ucomm.
+
+CASE ok_code. ER'.
+EN '0100'.
+WHEN 'GREET
+LEAVE TO SCRE
+WHEN 'WAITER'.
+CALL SCREEN '0100'.
+WHEN 'MANAGER'.
+LEAVE TO SCREEN '0100'.
+WHEN 'ADMIN'.
+LEAVE TO SCREEN '0100'.
+WHEN OTHERS. LEAVE PROGRAM.
+ENDCASE.
+ENDMODULE. "
+*&---------------------------------------------------
+*& Module USER_COMMAND_0110 INPUT *&---------------------------------------------------------------------* * text *----------------------------------------------------------------------* MODULE user_command_0110 INPUT.
+ok_code3 = sy-ucomm.
+CASE ok_code3. WHEN 'DINEIN'.
+LEAVE TO SCREEN '0111'. WHEN 'DELIVERY'.
+LEAVE TO SCREEN '0112'. WHEN 'TAKEOUT'.
+LEAVE TO SCREEN '0113'. WHEN 'BACK'.
+LEAVE TO SCREEN '0100'. WHEN OTHERS.
+LEAVE TO SCREEN '0001'. ENDCASE.
+ENDMODULE. " USER_COMMAND_0110 INPUT *&---------------------------------------------------------------------* *& Module USER_COMMAND_0101 INPUT *&---------------------------------------------------------------------* * text *----------------------------------------------------------------------* MODULE user_command_0101 INPUT.
+ok_code2 = sy-ucomm.
+CASE ok_code2. WHEN 'CHANGE'.
+PERFORM change_password. WHEN 'BACK'.
+LEAVE TO SCREEN '0100'. WHEN OTHERS.
+ENDCASE.
+ENDMODULE. " USER_COMMAND_0101 INPUT
+
+*&---------------------------------------------------------------------*
+*& Module USER_COMMAND_0120 INPUT *&---------------------------------------------------------------------* * text *----------------------------------------------------------------------* MODULE user_command_0120 INPUT.
+ENDMODULE. " USER_COMMAND_0120 INPUT *&---------------------------------------------------------------------* *& Module USER_COMMAND_0130 INPUT *&---------------------------------------------------------------------* * text *----------------------------------------------------------------------* MODULE user_command_0130 INPUT.
+ok_code5 = sy-ucomm. CASE ok_code5.
+WHEN 'INVENTORY'.
+CALL TRANSACTION 'ZLIST17'.
+WHEN 'SALES'. LEAVE TO SCREEN
+WHEN 'CHECKMENU'. LEAVE TO SCREEN
+WHEN 'INVLIST'. LEAVE TO SCREEN LEAVE TO SCREEN
+WHEN 'BACK'. LEAVE TO SCREEN
+WHEN 'EXIT'. LEAVE TO SCREEN
+ENDCASE. ENDMODULE.
+'0134'.
+'0131'.
+'0132'.
+'0133'.
+'0100'.
+'0001'.
+" USER_COMMAND_0130 INPUT
+*&---------------------------------------------------------------------* *& Module USER_COMMAND_0111 INPUT *&---------------------------------------------------------------------* * text *----------------------------------------------------------------------* MODULE user_command_0111 INPUT.
+*
+ok_code4 = sy-ucomm.
+CASE ok_code4. WHEN 'RESERVE'.
+PERFORM t_reserve.
+MESSAGE 'Reservation Successful' TYPE 'I'. WHEN 'BACK'.
+LEAVE TO SCREEN '0110'. WHEN OTHERS.
+ENDCASE.
+ENDMODULE. " USER_COMMAND_0111 INPUT
+
+
+*&---------------------------------------------------------------------*
+*& Module USER_COMMAND_0112 INPUT *&---------------------------------------------------------------------* * text *----------------------------------------------------------------------* MODULE user_command_0112 INPUT.
+ok_code = sy-ucomm. CASE ok_code.
+WHEN 'CONFIRM'.
+MESSAGE 'Order Confirmed, you will be taken to payment page.' TYPE
+WHEN 'BACK'.
+LEAVE TO SCREEN '0110'.
+WHEN 'EXIT'.
+LEAVE TO SCREEN '0110'.
+WHEN OTHERS. ENDCASE.
+ENDMODULE. " USER_COMMAND_0112 INPUT *&---------------------------------------------------------------------* *& Module USER_COMMAND_0113 INPUT *&---------------------------------------------------------------------* * text *----------------------------------------------------------------------* MODULE user_command_0113 INPUT.
+ok_code = sy-ucomm. CASE ok_code.
+WHEN 'CONFIRM_ORDER'. LEAVE TO SCREEN '0114'.
+WHEN 'BACK'.
+LEAVE TO SCREEN '0110'.
+WHEN 'EXIT'.
+LEAVE TO SCREEN '0100'.
+WHEN OTHERS. ENDCASE.
+ENDMODULE. " USER_COMMAND_0113 INPUT *&---------------------------------------------------------------------* *& Module USER_COMMAND_0131 INPUT *&---------------------------------------------------------------------* * text *----------------------------------------------------------------------* MODULE user_command_0131 INPUT.
+ok_code = sy-ucomm. CASE ok_code.
+WHEN 'EDITMENU'. PERFORM edit_menu.
+WHEN 'BACK'.
+LEAVE TO SCREEN '0130'.
+WHEN 'EXIT'.
+LEAVE TO SCREEN '0100'.
+WHEN OTHERS. ENDCASE.
+ENDMODULE. " USER_COMMAND_0131 INPUT
+
+
+*&---------------------------------------------------------------------*
+*& Module USER_COMMAND_0133 INPUT *&---------------------------------------------------------------------* * text *----------------------------------------------------------------------* MODULE user_command_0133 INPUT.
+ok_code = sy-ucomm.
+CASE ok_code. WHEN 'EDIT'.
+CALL TRANSACTION 'ZLIST17'. WHEN 'BACK'.
+LEAVE TO SCREEN '0130'. WHEN 'EXIT'.
+LEAVE TO SCREEN '0100'. ENDCASE.
+ENDMODULE. " USER_COMMAND_0133 INPUT *&---------------------------------------------------------------------* *& Module USER_COMMAND_0140 INPUT *&---------------------------------------------------------------------* * text *----------------------------------------------------------------------* MODULE user_command_0140 INPUT.
+ok_code1 = sy-ucomm.
+CASE ok_code1. WHEN 'ADDUP'.
+PERFORM insert_user_details. WHEN 'BACK'.
+LEAVE TO SCREEN '0100'. WHEN 'CANCEL'.
+LEAVE PROGRAM. WHEN 'RESETPWD'.
+CALL TRANSACTION 'ZPRESET17'. WHEN OTHERS.
+ENDCASE.
+ENDMODULE. " USER_COMMAND_0140 INPUT *&---------------------------------------------------------------------* *& Module USER_COMMAND_0134 INPUT *&---------------------------------------------------------------------* * text *----------------------------------------------------------------------* MODULE user_command_0134 INPUT.
+ok_code = sy-ucomm.
+CASE ok_code. WHEN 'SBD'.
+SUBMIT zsaldat17 AND RETURN. WHEN 'SBST'.
+SUBMIT zsalcus17 AND RETURN. WHEN 'BACK'.
+LEAVE TO SCREEN '0130'. WHEN 'EXIT'.
+AUSER-17 Restaurant Management System TSCN CODE – Z17P
+LEAVE TO SCREEN '0100'.
+WHEN 'GSR'.
+MESSAGE 'Generating sal
+SUBMIT zsalesdata17 AND RETURN. WHEN OTHERS.
+ENDCASE.
+ENDMODULE. " USER_COMMAND_0134 I
+*&---------------------------------------------------
+*& Module USER_COMMAND_0114 INPUT *&---------------------------------------------------------------------* * text *----------------------------------------------------------------------* MODULE user_command_0114 INPUT.
+ok_code = sy-ucomm. CASE ok_code.
+WHEN 'BACK'.
+LEAVE TO SCREEN '0110'.
+WHEN 'EXIT'.
+LEAVE TO SCREEN '0100'.
+ENDCASE.
+ENDMODULE. " USER_COMMAND_0114 INPUT *&---------------------------------------------------------------------* *& Module EXIT_COMMAND INPUT *&---------------------------------------------------------------------* * text *----------------------------------------------------------------------* MODULE exit_command INPUT.
+ENDMODULE. " EXIT_COMMAND INPUT *&---------------------------------------------------------------------* *& Module USER_COMMAND_0132 INPUT *&---------------------------------------------------------------------* * text *----------------------------------------------------------------------* MODULE user_command_0132 INPUT.
+ok_code = sy-ucomm. CASE ok_code.
+WHEN 'VIEW'.
+SUBMIT z_zmember_select_17 AND RETURN.
+WHEN 'EDIT'. PERFORM invedit.
+WHEN 'GRAPH'.
+SUBMIT z3dgraph17 AND RETURN.
+WHEN 'BACK'.
+LEAVE TO SCREEN '0130'.
+WHEN 'EXIT'.
+LEAVE TO SCREEN '0100'.
+ENDCASE.
+ENDMODULE. " USER_COMMAND_0132 INPUT
+
+
+
